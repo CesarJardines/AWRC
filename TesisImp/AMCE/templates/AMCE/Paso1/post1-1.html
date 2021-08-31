@@ -1,0 +1,33 @@
+
+{% extends 'AMCE/post.html'%}
+    {% block content %}
+    <div class="container">
+        <div class="text-center mt-5">
+                <h1>Definir el problema</h1>
+                <p class="text-left">En este paso plantearás preguntas y las evaluarás, de tal manera que te ayudarán a plantear la investigación con respecto al tema asignado.</p> 
+                <p>Comienza planteando una pregunta inicial</p>
+                <div class="popup" id="myBtn">Ejemplo
+                </div>
+            </div>
+        </div>
+
+
+<!--=============  MODAL ===================  class="popup" onclick="myFunction()" -->  
+    <!-- Modal a desplegar de ingresar código de clase -->
+    <div id="myModal" class="modal">
+
+    <!-- contenido del modal (ingresar código) -->
+    <div class="modal-content">
+      <div class="container">
+      <span class="close">&times;</span><br>
+      <label><b class="lead">Pregunta inicial</b></label>
+       <br>
+            Ejemplos <br>
+            ¿Qué es un Ciclón Tropical? <br>
+            ¿En qué fecha inició la Segunda Guerra Mundial? O <br>
+            ¿En dónde nació Miguel de Cervantes Saavedra? <br>
+
+      </div>
+    </div>
+</div>
+{% endblock%}

@@ -1,0 +1,59 @@
+{% extends 'AMCE/MG1.html'%}
+<main>
+{% block content %}
+  
+
+    <div >
+      <br>
+      <br>
+      <blockquote class="blockquote text-center">
+        <p class="mb-0" style="margin-top: 15px; font-size: 35px;">Clases</p>
+      </blockquote>
+      
+    </div>
+
+    <center>
+      <a class="btn btn-outline-dark" id="myBtn">Unirse a una clase</a>
+    </center>
+
+    <div class="container mt-5">
+      <table class="table">
+            <thead>
+            <th></th>
+            <th>Clase</th>
+            <th>Tema</th>
+            <th></th>
+            <th></th>
+        </thead>
+        <tbody>
+
+        </tbody>
+
+      </table>
+    </div>
+
+<p align="right">
+   <a class="btn btn-outline-dark" id="" href="/paso1-1" >ver clase</a>
+</p>
+
+<!--=============  MODAL ===================  id="myBtn" -->  
+    <!-- Modal a desplegar de ingresar código de clase -->
+    <div id="myModal" class="modal">
+
+    <!-- contenido del modal (ingresar código) -->
+    <div class="modal-content">
+      <div class="container">
+      <span class="close">&times;</span><br>
+      <label><b class="lead">Ingresa el código de la clase</b></label>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.code}}
+        <button type="submit" class="" id="">Publicar</button>
+        </form>
+      </div>
+    </div>
+</div>
+{% endblock%}
+</main>
+
+
