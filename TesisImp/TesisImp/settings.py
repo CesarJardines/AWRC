@@ -25,6 +25,7 @@ STATICFILES_DIRS = (
 
 # SECURITY WARNING: keep the secret key used in production secret!
 #AGREGAR CLAVE AQUI
+SECRET_KEY = 'django-insecure-x-3!go=wyym!vx^dvvs@rg8o()+t1iad09&f=ael=4op)l8m3q'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True

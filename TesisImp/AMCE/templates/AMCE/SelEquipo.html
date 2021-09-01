@@ -19,22 +19,23 @@
     <div class="container mt-5">
       <table class="table">
             <thead>
-            <th></th>
             <th>Clase</th>
             <th>Tema</th>
             <th></th>
-            <th></th>
+
         </thead>
         <tbody>
-
+          {% for codigo in code %}
+              <tr>
+              <td><a style="size: 30px" >{{codigo.codigo_materia.tema}}</a></td>
+              <td><a style="size: 30px" >{{codigo.codigo_materia.nombre}}</a></td>
+              <td><a class="btn btn-outline-dark" id="" href="/paso1-1" style="size: 1px">ver clase</a></td>
+            </tr>
+          {% endfor %}
         </tbody>
 
       </table>
     </div>
-
-<p align="right">
-   <a class="btn btn-outline-dark" id="" href="/paso1-1" >ver clase</a>
-</p>
 
 <!--=============  MODAL ===================  id="myBtn" -->  
     <!-- Modal a desplegar de ingresar código de clase -->
@@ -45,10 +46,10 @@
       <div class="container">
       <span class="close">&times;</span><br>
       <label><b class="lead">Ingresa el código de la clase</b></label>
-        <form method="post">
-            {% csrf_token %}
-            {{ form.code}}
-        <button type="submit" class="" id="">Publicar</button>
+        <form method="post" action="#">
+        {% csrf_token %}
+        <input type="text", name="new">
+        <button type="submit" name="save" value="save">ingresar</button>
         </form>
       </div>
     </div>

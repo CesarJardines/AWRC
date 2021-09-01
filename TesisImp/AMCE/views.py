@@ -19,7 +19,17 @@ def feed(request):
 
 @login_required
 def MG1(request):
-	return render(request,"AMCE/SelEquipo.html")
+	code = Anadir.objects.all()
+	a = request.POST
+	current_user = get_object_or_404(User, pk=request.user.pk)
+	args = {'form': a, 'code':code}
+	if request.method == 'POST':
+		print(a)
+		codigo_ingresado = request.POST.get("new")
+		codigo_clase = Anadir(user_id=current_user,codigo_materia=codigo_ingresado.id)
+		codigo_clase.save()
+
+	return render(request,"AMCE/SelEquipo.html",args)
 
 
 def registro(request):

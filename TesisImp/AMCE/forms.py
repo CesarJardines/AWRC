@@ -17,5 +17,5 @@ class PostForm(forms.ModelForm):
 		model = Post
 		fields = ['content']
 
-class CodeForm(forms.Form):
+class CodeForm(forms.ModelForm):
 	code = forms.CharField(label='', widget=forms.Textarea(attrs={'rows':2, 'placeholder': 'Ingresa tu respuesta'}))
