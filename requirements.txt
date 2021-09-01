@@ -3,7 +3,7 @@ blinker==1.4
 brotlipy==0.7.0
 certifi==2020.6.20
 click==8.0.1
-conda==4.9.2
+conda==4.3.16
 Django==3.2.5
 django-crispy-forms==1.12.0
 django-modal-forms==2.0
