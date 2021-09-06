@@ -13,6 +13,7 @@ def index(request):
 	return render(request, "AMCE/index.html")
 
 def feed(request):
+	code = Anadir.objects.filter(codigo_materia_id=codigo)
 	posts = Post.objects.all();
 	context = {'post':posts}
 	return render(request, 'AMCE/feed.html', context)
@@ -24,6 +25,7 @@ def feed1_2(request):
 
 @login_required
 def MG1(request):
+	#clases = Clases.objects.all()
 	anadir = Anadir()
 	#Muestro las clases asignadas al ID del usuario actual
 	code = Anadir.objects.filter(user_id_id=request.user.pk)
@@ -40,6 +42,26 @@ def MG1(request):
 
 
 	return render(request,"AMCE/SelEquipo.html",args)
+
+def single_page(request, codigo):
+	'''
+	Función para mostrar las actividades individuales de cada clase en la que 
+	esté inscrito el alumno
+	'''
+	current_user = get_object_or_404(User, pk=request.user.pk)
+	if request.method == 'POST':
+		form = PostForm(request.POST)
+		if form.is_valid():
+			#Agarramos los datos del usuario que ingresó datos en el forms
+			post = form.save(commit=False)
+			post.user = current_user
+			post.save()
+			messages.success(request, 'Post enviado')
+			return redirect("AMCE:feed")
+	else:
+		form = PostForm()
+	code = Anadir.objects.filter(codigo_materia_id=codigo)
+	return render(request, 'AMCE/Paso1/post1-1.html', {'form': form})
 
 
 def registro(request):
@@ -65,7 +87,11 @@ def agregarClase(request):
 	return render(request, 'AMCE/MG1.html', context)
 
 #con pk adquirimos al usuario loggeado
-def post1_1(request):
+def post1_1(request, codigo):
+	'''
+	Función para mostrar las actividades individuales de cada clase en la que 
+	esté inscrito el alumno
+	'''
 	current_user = get_object_or_404(User, pk=request.user.pk)
 	if request.method == 'POST':
 		form = PostForm(request.POST)
@@ -78,9 +104,10 @@ def post1_1(request):
 			return redirect("AMCE:feed")
 	else:
 		form = PostForm()
+	code = Anadir.objects.filter(codigo_materia_id=codigo)
 	return render(request, 'AMCE/Paso1/post1-1.html', {'form': form})
 
-def post1_2(request):
+def post1_2(request, codigo):
 	current_user = get_object_or_404(User, pk=request.user.pk)
 	if request.method == 'POST':
 		form = PostForm(request.POST)
@@ -93,6 +120,7 @@ def post1_2(request):
 			return redirect("/feed1-2")
 	else:
 		form = PostForm()
+	code = Anadir.objects.filter(codigo_materia_id=codigo)
 	return render(request, 'AMCE/Paso1/post1-2.html', {'form': form})
 
 def post1_3(request):

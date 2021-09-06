@@ -17,5 +17,5 @@
 	</div>
 </article>
 {% endfor %}
-<a href="/paso1-2" class="btn btn-outline-success" type="submit">Siguiente</a>
+<a href="{% url 'AMCE:post1_2' codigo=codigo.codigo_materia_id %}" class="btn btn-outline-success" type="submit">Siguiente</a>
 {% endblock%}
