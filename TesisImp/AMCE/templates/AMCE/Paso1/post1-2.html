@@ -1,17 +1,34 @@
 
 {% extends 'AMCE/post.html'%}
-
-	{% block content %}
-	<div class="container">
+    {% block content %}
+    <div class="container">
         <div class="text-center mt-5">
-                <h1>Paso 1.2 Analizar esa pregunta</h1>
-                <p class="text-left">Una vez planteada la Pregunta Inicial, deberás analizarla para determinar su grado de complejidad ¿Qué necesitan averiguar con exactitud para resolverla? Identifica el tema a explorar y los principales campos del conocimiento. </p>
-                <div class="popup" onclick="myFunction()">Ejemplo
-  				<span class="popuptext" id="myPopup">Pregunta inicial: ¿Qué es un Ciclón Tropical? <br />
-                                                        Tema: Ciclones Tropicales<br />
-                                                        Campos: Ciencias Naturales, geografía,
-                                                    meteorología, medio ambiente</span>
-				</div>
+                <h1>Pregunta secundaria</h1>
+                <p class="text-left">Para acotar el tema, plantea 1 pregunta secundaria. Las Preguntas Secundarias se derivan de la Pregunta Inicial y por esta razón son más concretas y cerradas.</p> 
+                <p>Comienza planteando una pregunta secundaria</p>
+                <div class="popup" id="myBtn">Ejemplo
+                </div>
             </div>
         </div>
+
+
+<!--=============  MODAL ===================  class="popup" onclick="myFunction()" -->  
+    <!-- Modal a desplegar de ingresar código de clase -->
+    <div id="myModal" class="modal">
+
+    <!-- contenido del modal (ingresar código) -->
+    <div class="modal-content">
+      <div class="container">
+      <span class="close">&times;</span><br>
+      <label><b class="lead">Pregunta secundaria</b></label>
+       <br>
+            Ejemplos <br>
+            ¿Qué es un Ciclón Tropical y cuáles son sus componentes? <br>
+            ¿Cuáles son las etapas de formación de un Ciclón Tropical? <br>
+            ¿Cuáles son las condiciones para que se formen en ella Ciclones Tropicales? <br>
+
+
+      </div>
+    </div>
+</div>
 {% endblock%}

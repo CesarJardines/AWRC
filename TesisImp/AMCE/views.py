@@ -17,17 +17,27 @@ def feed(request):
 	context = {'post':posts}
 	return render(request, 'AMCE/feed.html', context)
 
+def feed1_2(request):
+	posts = Post.objects.all();
+	context = {'post':posts}
+	return render(request, 'AMCE/Feed1/feed1_2.html', context)
+
 @login_required
 def MG1(request):
-	code = Anadir.objects.all()
+	anadir = Anadir()
+	#Muestro las clases asignadas al ID del usuario actual
+	code = Anadir.objects.filter(user_id_id=request.user.pk)
 	a = request.POST
 	current_user = get_object_or_404(User, pk=request.user.pk)
 	args = {'form': a, 'code':code}
 	if request.method == 'POST':
 		print(a)
 		codigo_ingresado = request.POST.get("new")
-		codigo_clase = Anadir(user_id=current_user,codigo_materia=codigo_ingresado.id)
+		anadir.codigo_materia = Clases.objects.get(codigo = request.POST.get("new"))
+		codigo_clase = Anadir(user_id=current_user,codigo_materia=anadir.codigo_materia)
+		#anadir.save()
 		codigo_clase.save()
+
 
 	return render(request,"AMCE/SelEquipo.html",args)
 
@@ -80,7 +90,7 @@ def post1_2(request):
 			post.user = current_user
 			post.save()
 			messages.success(request, 'Post enviado')
-			return redirect("AMCE:feed")
+			return redirect("/feed1-2")
 	else:
 		form = PostForm()
 	return render(request, 'AMCE/Paso1/post1-2.html', {'form': form})
@@ -95,7 +105,7 @@ def post1_3(request):
 			post.user = current_user
 			post.save()
 			messages.success(request, 'Post enviado')
-			return redirect("AMCE:feed")
+			return redirect("AMCE:index")
 	else:
 		form = PostForm()
 	return render(request, 'AMCE/Paso1/post1-3.html', {'form': form})
