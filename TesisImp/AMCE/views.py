@@ -6,14 +6,15 @@ from django.contrib.auth import authenticate, login
 from django.template import RequestContext
 from django.contrib.auth.models import User
 from .models import *
+from django.urls import reverse
 
 # Create your views here.
 
 def index(request):
 	return render(request, "AMCE/index.html")
 
-def feed(request):
-	code = Anadir.objects.filter(codigo_materia_id=codigo)
+def feed(request, codigo):
+	code = Anadir.objects.filter(codigo_materia_id=codigo,user_id_id=request.user.pk)
 	posts = Post.objects.all();
 	context = {'post':posts}
 	return render(request, 'AMCE/feed.html', context)
@@ -43,25 +44,6 @@ def MG1(request):
 
 	return render(request,"AMCE/SelEquipo.html",args)
 
-def single_page(request, codigo):
-	'''
-	Función para mostrar las actividades individuales de cada clase en la que 
-	esté inscrito el alumno
-	'''
-	current_user = get_object_or_404(User, pk=request.user.pk)
-	if request.method == 'POST':
-		form = PostForm(request.POST)
-		if form.is_valid():
-			#Agarramos los datos del usuario que ingresó datos en el forms
-			post = form.save(commit=False)
-			post.user = current_user
-			post.save()
-			messages.success(request, 'Post enviado')
-			return redirect("AMCE:feed")
-	else:
-		form = PostForm()
-	code = Anadir.objects.filter(codigo_materia_id=codigo)
-	return render(request, 'AMCE/Paso1/post1-1.html', {'form': form})
 
 
 def registro(request):
@@ -92,6 +74,8 @@ def post1_1(request, codigo):
 	Función para mostrar las actividades individuales de cada clase en la que 
 	esté inscrito el alumno
 	'''
+	#cambiar a get
+	code = Anadir.objects.get(codigo_materia_id=codigo,user_id_id=request.user.pk)
 	current_user = get_object_or_404(User, pk=request.user.pk)
 	if request.method == 'POST':
 		form = PostForm(request.POST)
@@ -101,13 +85,13 @@ def post1_1(request, codigo):
 			post.user = current_user
 			post.save()
 			messages.success(request, 'Post enviado')
-			return redirect("AMCE:feed")
+			return redirect('AMCE:feed2', { 'codigo':code })
 	else:
 		form = PostForm()
-	code = Anadir.objects.filter(codigo_materia_id=codigo)
 	return render(request, 'AMCE/Paso1/post1-1.html', {'form': form})
 
 def post1_2(request, codigo):
+	code = Anadir.objects.filter(codigo_materia_id=codigo)
 	current_user = get_object_or_404(User, pk=request.user.pk)
 	if request.method == 'POST':
 		form = PostForm(request.POST)
@@ -120,7 +104,6 @@ def post1_2(request, codigo):
 			return redirect("/feed1-2")
 	else:
 		form = PostForm()
-	code = Anadir.objects.filter(codigo_materia_id=codigo)
 	return render(request, 'AMCE/Paso1/post1-2.html', {'form': form})
 
 def post1_3(request):
