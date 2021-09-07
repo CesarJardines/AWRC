@@ -26,18 +26,43 @@ class Profile(models.Model):
 	def __str__(self):
 		return f'Perfil de {self.user.username}'
 
+class Equipo(models.Model):
+	user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+	numEquipo = models.IntegerField(default=None,primary_key=True)
+
+
 #Creación del modelo para los post de los alumnos en los pasos de MG
 class Post(models.Model):
 	'''
 	Atributos de Post
 	'''
 	user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='post')
-	timestamp = models.DateTimeField(default = timezone.now)
+	timestamp = models.DateTimeField(default = timezone.now) 
 	content = models.TextField()
+	voto = models.IntegerField(default=0)
+	comentario = models.TextField(default='')
 	#codigo_materia = models.ForeignKey(Clases, on_delete=models.CASCADE)
 
 	class Meta:
 		ordering = ['-timestamp']
+	#str necesario para visualizar el contenido del post en local/admin/post
+	def __str__(self):
+		return f'{self.user.username}: {self.content}'
+
+#Creación del modelo para los post de los alumnos en los pasos de MG
+class PostSecundaria(models.Model):
+	'''
+	Atributos de Post
+	'''
+	userSecu = models.ForeignKey(User, on_delete=models.CASCADE, related_name='postSecu')
+	timestampSecu = models.DateTimeField(default = timezone.now) 
+	contentSecu = models.TextField()
+	votoSecu = models.IntegerField(default=0)
+	comentarioSecu = models.TextField(default='')
+	#codigo_materia = models.ForeignKey(Clases, on_delete=models.CASCADE)
+
+	class Meta:
+		ordering = ['-timestampSecu']
 	#str necesario para visualizar el contenido del post en local/admin/post
 	def __str__(self):
 		return f'{self.user.username}: {self.content}'

@@ -29,7 +29,7 @@
               <tr>
               <td><a style="size: 30px" >{{codigo.codigo_materia.tema}}</a></td>
               <td><a style="size: 30px" >{{codigo.codigo_materia.nombre}}</a></td>
-              <td><a class="btn btn-outline-dark" id="" href="{% url 'AMCE:post1_1' codigo=codigo.codigo_materia_id %}" style="size: 1px">ver clase</a></td>
+              <td><a class="btn btn-outline-dark" id="" href="/paso1-1" style="size: 1px">ver clase</a></td>
             </tr>
           {% endfor %}
         </tbody>
@@ -48,7 +48,7 @@
       <label><b class="lead">Ingresa el código de la clase</b></label>
         <form method="post" action="#">
         {% csrf_token %}
-        <input type="text", name="new">
+        <input type="text", name="new" required>
         <button type="submit" name="save" value="save">ingresar</button>
         </form>
       </div>

@@ -1,0 +1,44 @@
+
+{% extends 'AMCE/MG1.html'%}
+	{% block content %}
+     <div class="container">
+        <div class="text-center mt-5">
+                <h1>Resultados y Comentarios de retroalimentación</h1>
+            </div>
+        </div>
+<article>
+	<div class="container-article">
+		<form method="post" action="#">
+			{% csrf_token %}
+			<label for="html">
+				{% for post in post %}
+						<div>
+							<h2 class="username"><a>{{post.user.username}}</a></h2>
+							<div class="post">{{post.content}}</div>
+							<div class="post">Votos: {{post.voto}}</div>
+						</div>
+						<br>
+				{% endfor %}
+			</label>
+			<br>
+			<br>
+			<br>
+			<a href="/paso1-2" class="btn btn-outline-dark" >Continuar </a>
+		</form>
+	</div>
+</article>
+<script type="text/javascript">
+
+    window.setInterval('refresh()', 10000); 	
+    // Call a function every 10000 milliseconds 
+    // (OR 10 seconds).
+
+    // Refresh or reload page.
+    function refresh() {
+        window .location.reload();
+    }
+
+</script>
+
+{% endblock%}
+

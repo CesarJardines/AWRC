@@ -131,7 +131,7 @@ h2{
   
 #progressbar li.active:before,
 #progressbar li.active:after {
-    background: #2F8D46
+    background: #2F8D46;
 }
   
 .progress {

@@ -7,17 +7,35 @@ from django.template import RequestContext
 from django.contrib.auth.models import User
 from .models import *
 from django.urls import reverse
+#se importa para aumentar el contador de votos en feed
+from django.db.models import F
 
 # Create your views here.
 
 def index(request):
 	return render(request, "AMCE/index.html")
 
-def feed(request, codigo):
-	code = Anadir.objects.filter(codigo_materia_id=codigo,user_id_id=request.user.pk)
+def feed(request):
+	#code = Anadir.objects.filter(codigo_materia_id=codigo,user_id_id=request.user.pk)
 	posts = Post.objects.all();
 	context = {'post':posts}
+	#se consigue el valor de la celda voto del usuario 
+	a = request.POST
+	if request.method == 'POST':
+		#se captura el nombre de usuario por el cual se está votando
+		voto = request.POST.get("preguntaInicial")
+		comentario = request.POST.get("comentario")
+		print(comentario)
+		#Se agrega voto y se agrega comentario a las respectivas celdas de la Bade de Datos
+		voto_sumar = Post.objects.filter(user_id=voto).update(voto=F('voto')+1)
+		comentario_agregar = Post.objects.filter(user_id=request.user.pk).update(comentario=comentario)
+		return redirect('AMCE:retroalimentacionPI')
 	return render(request, 'AMCE/feed.html', context)
+
+def retroPreguntaInicial(request):
+	posts = Post.objects.all();
+	context = {'post':posts}
+	return render(request, 'AMCE/retroPreguntaInicial.html', context)	
 
 def feed1_2(request):
 	posts = Post.objects.all();
@@ -27,6 +45,12 @@ def feed1_2(request):
 @login_required
 def MG1(request):
 	#clases = Clases.objects.all()
+	equipo = Equipo.objects.filter(numEquipo=1);
+	print(equipo)
+	if equipo == 2:
+		print(1)
+	else:
+		print(2)
 	anadir = Anadir()
 	#Muestro las clases asignadas al ID del usuario actual
 	code = Anadir.objects.filter(user_id_id=request.user.pk)
@@ -44,8 +68,6 @@ def MG1(request):
 
 	return render(request,"AMCE/SelEquipo.html",args)
 
-
-
 def registro(request):
 	data = {
 		'form': CustomUserCreationForm()
@@ -53,11 +75,15 @@ def registro(request):
 	if request.method == "POST":
 		formulario = CustomUserCreationForm(data=request.POST)
 		if formulario.is_valid():
-			formulario.save()
+			usuario = formulario.save()
+			usuario.save()
 			user = authenticate(username=formulario.cleaned_data["username"], password=formulario.cleaned_data["password1"])
+			equipo = Equipo.objects.all();
+
+
 			login(request,user)
 			messages.success(request, "Registro exitoso, inicia sesión")
-			return redirect(to="login")
+			return redirect(to="AMCE:MG1")
 		data["form"] = formulario
 	return render(request,'registration/registro.html',data)
 
@@ -69,13 +95,13 @@ def agregarClase(request):
 	return render(request, 'AMCE/MG1.html', context)
 
 #con pk adquirimos al usuario loggeado
-def post1_1(request, codigo):
+def post1_1(request):
 	'''
 	Función para mostrar las actividades individuales de cada clase en la que 
 	esté inscrito el alumno
 	'''
 	#cambiar a get
-	code = Anadir.objects.get(codigo_materia_id=codigo,user_id_id=request.user.pk)
+	#code = Anadir.objects.get(codigo_materia_id=codigo,user_id_id=request.user.pk)
 	current_user = get_object_or_404(User, pk=request.user.pk)
 	if request.method == 'POST':
 		form = PostForm(request.POST)
@@ -85,13 +111,13 @@ def post1_1(request, codigo):
 			post.user = current_user
 			post.save()
 			messages.success(request, 'Post enviado')
-			return redirect('AMCE:feed2', { 'codigo':code })
+			return redirect('AMCE:feed')
 	else:
 		form = PostForm()
 	return render(request, 'AMCE/Paso1/post1-1.html', {'form': form})
 
-def post1_2(request, codigo):
-	code = Anadir.objects.filter(codigo_materia_id=codigo)
+def post1_2(request):
+	#code = Anadir.objects.filter(codigo_materia_id=codigo)
 	current_user = get_object_or_404(User, pk=request.user.pk)
 	if request.method == 'POST':
 		form = PostForm(request.POST)
@@ -137,6 +163,7 @@ def post1_4(request):
 	return render(request, 'AMCE/Paso1/post1-4.html', {'form': form})
 
 #Función que crea un perfil cada que se crea un usuario
+
 def profile(request,username=None):
 	current_user = request.user
 	#Preguntamos si el usuario loggeado quiere ver su perfil o un perfil de algún amigo
@@ -148,7 +175,6 @@ def profile(request,username=None):
 		user = current_user
 	return render(request, 'registration/profile.html', {'user': user, 'posts':posts})
 
-#def seleccionarEquipo(request):
 
 
 

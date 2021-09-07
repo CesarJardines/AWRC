@@ -1,21 +1,63 @@
 
 {% extends 'AMCE/MG1.html'%}
-
 	{% block content %}
-
-{% for post in post %}
-
+     <div class="container">
+        <div class="text-center mt-5">
+                <h1>Vota por la pregunta inicial con la que concuerdes más y da una retroalimentación</h1>
+            </div>
+        </div>
 <article>
 	<div class="container-article">
-		<div>
-			<h2 class="username"><a href="{% url 'AMCE:profile' post.user.username%}">{{post.user.username}}</a></h2>
-			<i class="clock"></i>
-			<time data-time="#">{{post.timestamp}}</time>
-			<div class="post">{{post.content}}</div>
-		</div>
-		
+		<form method="post" action="#">
+			{% csrf_token %}
+			<label for="html">
+				{% for post in post %}
+				<tr>
+					<td><input type="radio" id="inicia" value="{{post.user_id}}" name="preguntaInicial" numero="{{post.user_id}}" required> </td>
+					<td>
+						<div>
+							<h2 class="username"><a>{{post.user.username}}</a></h2>
+							<i class="clock"></i>
+							<!--<time data-time="#">{{post.timestamp}}</time>-->
+							<div class="post">{{post.content}}</div>
+						</div>
+					</td>
+				</tr>
+				{% endfor %}
+			</label>
+			<br>
+			<br>
+			<br>
+			<br>
+			<!--input del comentario-->
+			<input type="text", name="comentario" placeholder="retroalimentación de tu voto" required>
+			<a class="lead" ><font color="blue" size="2px" id="myBtn">comentarios</font></a><br>
+			<br>
+			<input type="submit" value="Siguiente" id="myBtn">
+		</form>
 	</div>
+<!--=============  MODAL ===================  id="myBtn" -->  
+    <!-- Modal a desplegar con todos los comentarios de los usuarios -->
+    <div id="myModal" class="modal">
+
+    <!-- contenido del modal (comentarios) -->
+    <div class="modal-content">
+      <div class="container">
+      <span class="close">&times;</span><br>
+      <label><b class="lead">Comentarios de la retroalimentación</b></label>
+      <br>
+				{% for post in post %}
+				<div>
+					<br>
+					<h2 class="username"><a>{{post.user.username}}</a></h2>
+					<div class="post">{{post.comentario}}</div>
+					<br>
+				</div>
+				{% endfor %}
+      </div>
+    </div>
+</div>
 </article>
-{% endfor %}
-<a href="" class="btn btn-outline-success" type="submit">Siguiente</a>
+
 {% endblock%}
+
