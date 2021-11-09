@@ -80,7 +80,6 @@ def registro(request):
 			user = authenticate(username=formulario.cleaned_data["username"], password=formulario.cleaned_data["password1"])
 			equipo = Equipo.objects.all();
 
-
 			login(request,user)
 			messages.success(request, "Registro exitoso, inicia sesión")
 			return redirect(to="AMCE:MG1")

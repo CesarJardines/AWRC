@@ -2,8 +2,8 @@ from django.contrib import admin
 from django.urls import include, path
 
 #se agrega para heroku
-from django.conf import settings 
-from django.conf.urls.static import static
+#from django.conf import settings 
+#from django.conf.urls.static import static
 
 # Views
 from AMCE import views
@@ -29,5 +29,5 @@ path('profile/', views.profile, name = 'profile'),
 path('retroalimentacionPI/', views.retroPreguntaInicial, name = 'retroalimentacionPI'),
 path('profile/<str:username>', views.profile, name = 'profile'),
 
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+] #+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

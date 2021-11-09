@@ -21,7 +21,7 @@ class PostFormSecundaria(forms.ModelForm):
 #Formulario  para el form de post 
 class PostForm(forms.ModelForm):
 	#Aqui se obtiene el campo de contenido de nuestro modelo Forms para Post
-	content = forms.CharField(label='', widget=forms.Textarea(attrs={'rows':2, 'placeholder': 'Ingresa tu respuesta'}))
+	content = forms.CharField(label='', widget=forms.Textarea(attrs={'rows':2, 'placeholder': 'Escribe tu pregunta inicial'}))
 
 	class Meta:
 		model = Post

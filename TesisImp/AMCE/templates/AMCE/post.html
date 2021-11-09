@@ -24,6 +24,9 @@
         <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
         <!-- CSS para ingresar código de clase (MODAL) -->
         <link href="{% static 'css/modal.css'%}" rel="stylesheet"/>
+        <!-- para el modal por primera vez-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     </head>
     <body>
         <!-- Responsive navbar-->
@@ -65,21 +68,42 @@
         {% block content %}
 
         {% endblock content %}
-        
         <form method="post">
             {% csrf_token %}
             {{ form.content}}
-        <button type="submit" class="" id="">Publicar</button>
+                    <div class="container" align="center">
+                    <div class="popup" id="myBtn" align="center">Ejemplo </div>
+                    </div>
+                    <br>
+        <button type="submit" class="" id="" align="center">Publicar</button>
         </form>
 
-    <script>
-    // Función para el popAlert
-    function myFunction() {
-    var popup = document.getElementById("myPopup");
-    popup.classList.toggle("show");
-    }
-    </script>
+        <!--=============  MODAL ===================  class="popup" onclick="myFunction()" -->  
+    <!-- Modal a desplegar de ingresar código de clase -->
+    <div id="myModal" class="modal">
 
+    <!-- contenido del modal (ingresar código) -->
+    <div class="modal-content">
+      <div class="container">
+      <span class="close">&times;</span><br>
+      <label><b class="lead">Pregunta inicial</b></label>
+       <br>
+            Ejemplos <br>
+            ¿Qué es un Ciclón Tropical? <br>
+            ¿En qué fecha inició la Segunda Guerra Mundial? O <br>
+            ¿En dónde nació Miguel de Cervantes Saavedra? <br>
+
+      </div>
+    </div>
+</div>
+    <script>
+$(document).ready(function() {
+  if ($.cookie("kailashs") == null) {
+        $("#myModal").modal("show");
+        $.cookie("kailashs", "2")
+   }
+});
+    </script>
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
